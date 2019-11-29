@@ -523,7 +523,7 @@
 	var/mob/living/carbon/viable_occupant = null
 	if(connected)
 		viable_occupant = connected.occupant
-		if(!istype(viable_occupant) || !viable_occupant.dna || HAS_TRAIT(viable_occupant, TRAIT_RADIMMUNE) || HAS_TRAIT(viable_occupant, TRAIT_NOCLONE))
+		if(viable_occupant.has_dna() && (!(RADIMMUNE in viable_occupant.dna.species.species_traits)) && (!(NOSCAN in viable_occupant.dna.species.species_traits)) && (!(viable_occupant.disabilities & NOCLONE) || (connected.scan_level == 3))) //occupant is viable for dna modification | KEPLER CHANGED FOR IPC COMPATIBILITY
 			viable_occupant = null
 	return viable_occupant
 

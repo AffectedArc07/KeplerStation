@@ -180,6 +180,15 @@
 		affecting = get_bodypart(ran_zone(user.zone_selected))
 	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target
 
+	// KEPLER CHANGE: IPC crap
+	if(affecting)
+		if(I.force && I.damtype != STAMINA && affecting.status == BODYPART_ROBOTIC) // Bodpart_robotic sparks when hit, but only when it does real damage
+			if(I.force >= 5)
+				do_sparks(1, FALSE, loc)
+				if(prob(25))
+					new /obj/effect/decal/cleanable/oil(loc)
+	// END KEPLER CHANGE
+
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
 
 	SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[I.force]", "[I.type]"))
@@ -502,6 +511,11 @@
 				if(2)
 					L.receive_damage(0,5)
 					Stun(100)
+			// KEPLER CHANGE: More IPC crap
+			if((EASYDISMEMBER in L.owner.dna.species.species_traits) && L.body_zone != "chest")
+				if(prob(20))
+					L.dismember(BRUTE)
+			// END KEPLER CHANGE
 
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	var/list/damaged = list()

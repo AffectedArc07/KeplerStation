@@ -92,8 +92,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"body_markings" = "None",
 		"legs" = "Normal Legs",
 		"moth_wings" = "Plain",
-		"moth_markings" = "None", //KEPLER CHANGE
-		"flavor_text" = ""
+		"flavor_text" = "",
+		// KEPLER CHANGES
+		"moth_markings" = "None",
+		"ipc_screen" = "Blue",
+		"ipc_antenna" = "None",
+		"ipc_chassis" = "Morpheus Cyberkinetics(Greyscale)")
+		// END KEPLER CHANGES
 		)
 
 	var/list/custom_names = list()
@@ -483,6 +488,35 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
+				// KEPLER CHANGE: IPC screen selection
+				if("ipc_screen" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='14%'>"
+
+					dat += "<h3>Screen Style</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=ipc_screen;task=input'>[features["ipc_screen"]]</a><BR>"
+					dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
+					dat += "</td>"
+
+				if("ipc_antenna" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='14%'>"
+
+					dat += "<h3>Antenna Style</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=ipc_antenna;task=input'>[features["ipc_antenna"]]</a><BR>"
+					dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
+					dat += "</td>"
+
+				if("ipc_chassis" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='14%'>"
+
+					dat += "<h3>Chassis Style</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=ipc_chassis;task=input'>[features["ipc_chassis"]]</a><BR>"
+
+					dat += "</td>"
+				// END KEPLER CHANGE
+				
 			if(CONFIG_GET(flag/join_with_mutant_humans))
 
 				if("wings" in pref_species.default_features && GLOB.r_wings_list.len >1)
@@ -1159,9 +1193,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							ghost_others = GHOST_OTHERS_SIMPLE
 
 				if("name")
-					var/new_name = input(user, "Choose your character's name:", "Character Preference")  as text|null
+					var/new_name = input(user, "Choose your character's name:", "Character Preference")  as text|null 
 					if(new_name)
-						new_name = reject_bad_name(new_name)
+						new_name = reject_bad_name(new_name, pref_species.allow_numbers_in_name) // KEPLER CHANGE, IPC crap
 						if(new_name)
 							real_name = new_name
 						else
@@ -1366,6 +1400,24 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["moth_wings"] = new_moth_wings
 
 				//KEPLER CHANGE
+				if("ipc_screen")
+					var/new_ipc_screen
+					new_ipc_screen = input(user, "Choose your character's screen:", "Character Preference") as null|anything in GLOB.ipc_screens_list
+					if(new_ipc_screen)
+						features["ipc_screen"] = new_ipc_screen
+
+				if("ipc_antenna")
+					var/new_ipc_antenna
+					new_ipc_antenna = input(user, "Choose your character's antenna:", "Character Preference") as null|anything in GLOB.ipc_antennas_list
+					if(new_ipc_antenna)
+						features["ipc_antenna"] = new_ipc_antenna
+
+				if("ipc_chassis")
+					var/new_ipc_chassis
+					new_ipc_chassis = input(user, "Choose your character's chassis:", "Character Preference") as null|anything in GLOB.ipc_chassis_list
+					if(new_ipc_chassis)
+						features["ipc_chassis"] = new_ipc_chassis
+
 				if("moth_markings")
 					var/new_moth_markings
 					new_moth_markings = input(user, "Choose your character's markings:", "Character Preference") as null|anything in GLOB.moth_markings_list

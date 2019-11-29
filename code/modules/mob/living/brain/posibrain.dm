@@ -27,6 +27,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/recharge_message = "<span class='warning'>The positronic brain isn't ready to activate again yet! Give it some time to recharge.</span>"
 	var/list/possible_names //If you leave this blank, it will use the global posibrain names
 	var/picked_name
+	var/silenced = FALSE // KEPLER CHANGE: if set to TRUE, they can't talk.
 
 /obj/item/mmi/posibrain/Topic(href, href_list)
 	if(href_list["activate"])
@@ -44,8 +45,13 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(!brainmob)
 		brainmob = new(src)
 	if(is_occupied())
-		to_chat(user, "<span class='warning'>This [name] is already active!</span>")
+		// KEPLER CHANGE: Silencing
+		silenced = !silenced
+		to_chat(user, "<span class='notice'>You toggle the speaker [silenced ? "off" : "on"].</span>")
+		if(brainmob && brainmob.key)
+			to_chat(brainmob, "<span class='warning'>Your internal speaker has been toggled [silenced ? "off" : "on"].</span>")
 		return
+		// END KEPLER CHANGE
 	if(next_ask > world.time)
 		to_chat(user, recharge_message)
 		return
@@ -160,7 +166,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 				msg = "<span class='deadsay'>It appears to be completely inactive.</span>"
 	else
 		msg = "[dead_message]"
-
+	msg += "\nIts speaker is turned [silenced ? "off" : "on"]." // KEPLER CHANGE
 	to_chat(user, msg)
 
 /obj/item/mmi/posibrain/Initialize()
@@ -192,3 +198,8 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		icon_state = "[initial(icon_state)]-occupied"
 	else
 		icon_state = initial(icon_state)
+
+// KEPLER CHANGE
+/obj/item/device/mmi/posibrain/ipc
+	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves. It has an IPC serial number engraved on the top."
+	autoping = FALSE

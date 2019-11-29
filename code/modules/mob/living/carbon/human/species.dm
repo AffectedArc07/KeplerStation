@@ -100,7 +100,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	//Citadel snowflake
 	var/whitelisted = 0 		//Is this species restricted to certain players?
 	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
-
+	
+	// KEPLER CHANGES:
+	var/toxmod = 1		// multiplier for toxin damage
+	var/clonemod = 1	/// multiplier for clone damage
+	var/reagent_tag = PROCESS_ORGANIC //Used for metabolizing reagents. We're going to assume you're a meatbag unless you say otherwise.
+	var/allow_numbers_in_name // Can this species use numbers in its name?	
+	var/obj/item/organ/brain/mutant_brain = /obj/item/organ/brain
 
 ///////////
 // PROCS //
@@ -306,6 +312,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				C.put_in_hands(new mutanthands())
 
+	// KEPLER CHANGE
+	if(ROBOTIC_LIMBS in species_traits)
+		for(var/obj/item/bodypart/B in C.bodyparts)
+			B.change_bodypart_status(BODYPART_ROBOTIC) // Makes all Bodyparts robotic.
+			B.render_like_organic = TRUE
+
+	if(NOMOUTH in species_traits)
+		for(var/obj/item/bodypart/head/head in C.bodyparts)
+			head.mouth = FALSE
+	// END KEPLER CHANGE
+
 	for(var/X in inherent_traits)
 		ADD_TRAIT(C, X, SPECIES_TRAIT)
 
@@ -325,6 +342,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			C.dna.blood_type = new_species.exotic_bloodtype
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(TRUE)
+	
+	// KEPLER CHANGE
+	if(ROBOTIC_LIMBS in species_traits)
+		for(var/obj/item/bodypart/B in C.bodyparts)
+			B.change_bodypart_status(BODYPART_ORGANIC, FALSE, TRUE)
+			B.render_like_organic = FALSE
+	if(NOMOUTH in species_traits)
+		for(var/obj/item/bodypart/head/head in C.bodyparts)
+			head.mouth = TRUE
+	// END KEPLER CHANGE
+
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 
@@ -609,6 +637,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		else if ("wings" in mutant_bodyparts)
 			bodyparts_to_add -= "wings_open"
 
+	// KEPLER CHANGE
+	if("ipc_screen" in mutant_bodyparts)
+		if(!H.dna.features["ipc_screen"] || H.dna.features["ipc_screen"] == "None" || H.head && (H.head.flags_inv & HIDEFACE) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEEYES)) || !HD)
+			bodyparts_to_add -= "ipc_screen"
+
+	if("ipc_antenna" in mutant_bodyparts)
+		if(!H.dna.features["ipc_antenna"] || H.dna.features["ipc_antenna"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD)
+			bodyparts_to_add -= "ipc_antenna"
+
+	// END KEPLER CHANGE
+
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
 	var/update_needed = FALSE
 	var/not_digitigrade = TRUE
@@ -677,8 +716,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				//KEPLER CHANGE
 				if("moth_markings")
 					S = GLOB.moth_markings_list[H.dna.features["moth_markings"]]
-				if("caps")
+				if("ipc_screen")
+					S = GLOB.ipc_screens_list[H.dna.features["ipc_screen"]]
+				if("ipc_antenna")
+					S = GLOB.ipc_antennas_list[H.dna.features["ipc_antenna"]]
+				if("ipc_chassis")
+					S = GLOB.ipc_chassis_list[H.dna.features["ipc_chassis"]]
 				//END KEPLER CHANGE
+				if("caps")
 					S = GLOB.caps_list[H.dna.features["caps"]]
 			if(!S || S.icon_state == "none")
 				continue
@@ -1003,6 +1048,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.reagents.del_reagent(chem.id)
 		return 1
 	return FALSE
+
+// KEPLER CHANGE
+// Do species-specific reagent handling here
+// Return 1 if it should do normal processing too
+// Return 0 if it shouldn't deplete and do its normal effect
+// Other return values will cause weird badness
+/datum/species/proc/handle_reagents(mob/living/carbon/human/H, datum/reagent/R)
+	if(R.id == exotic_blood)
+		H.blood_volume = min(H.blood_volume + round(R.volume, 0.1), BLOOD_VOLUME_NORMAL)
+		H.reagents.del_reagent(R.id)
+		return FALSE
+	return TRUE
+// END CHANGE
 
 /datum/species/proc/check_weakness(obj/item, mob/living/attacker)
 	return FALSE
@@ -1687,13 +1745,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else
 				H.adjustFireLoss(damage_amount)
 		if(TOX)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.tox_mod
+			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.tox_mod * toxmod // KEPLER CHANGE: TOXMOD
 			H.adjustToxLoss(damage_amount)
 		if(OXY)
 			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.oxy_mod
 			H.adjustOxyLoss(damage_amount)
 		if(CLONE)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.clone_mod
+			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.clone_mod * clonemod // KEPLER CHANGE: CLONE
 			H.adjustCloneLoss(damage_amount)
 		if(STAMINA)
 			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.stamina_mod

@@ -471,6 +471,10 @@
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 		return 1
 
+	// KEPLER CHANGE
+	if(!has_mouth())
+		return 1
+
 	if(nutrition < 100 && !blood)
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
@@ -961,3 +965,9 @@
 	if(combatmode)
 		toggle_combat_mode(TRUE, TRUE)
 	return ..()
+
+// KEPLER CHANGE: Mouth checking proc
+/mob/living/carbon/has_mouth()
+	for(var/obj/item/bodypart/head/head in bodyparts)
+		if(head.mouth)
+			return TRUE 

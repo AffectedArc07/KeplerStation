@@ -1,8 +1,16 @@
 /mob/living/carbon/human/gib_animation()
-	new /obj/effect/temp_visual/gib_animation(loc, "gibbed-h")
+	// KEPLER CHANGE: IPC crap
+	if(!isipc(src))
+		new /obj/effect/temp_visual/gib_animation(loc, "gibbed-h")
+	else
+		new /obj/effect/temp_visual/gib_animation(loc, "gibbed-r")
 
 /mob/living/carbon/human/dust_animation()
-	new /obj/effect/temp_visual/dust_animation(loc, "dust-h")
+	// KEPLER CHANGE: IPC crap
+	if(!isipc(src))
+		new /obj/effect/temp_visual/dust_animation(loc, "dust-r")
+	else
+		new /obj/effect/temp_visual/dust_animation(loc, "dust-h")
 
 /mob/living/carbon/human/spawn_gibs(with_bodyparts, atom/loc_override)
 	var/location = loc_override ? loc_override.drop_location() : drop_location()
@@ -16,15 +24,27 @@
 			new S.gib_types(location, src, get_static_viruses())
 	else
 		if(with_bodyparts)
-			new /obj/effect/gibspawner/human(location, src, get_static_viruses())
+			// KEPLER CHANGE: IPC crap
+			if(!isipc(src))
+				new /obj/effect/gibspawner/human(location, src, get_static_viruses())
+			else
+				new /obj/effect/gibspawner/robot(location, src)
 		else
-			new /obj/effect/gibspawner/human/bodypartless(location, src, get_static_viruses())
+			// KEPLER CHANGE: IPC crap
+			if(!isipc(src))
+				new /obj/effect/gibspawner/humanbodypartless(location, src, get_static_viruses())
+			else
+				new /obj/effect/gibspawner/robot(location, src)
 
 /mob/living/carbon/human/spawn_dust(just_ash = FALSE)
 	if(just_ash)
 		new /obj/effect/decal/cleanable/ash(loc)
 	else
-		new /obj/effect/decal/remains/human(loc)
+		// KEPLER CHANGE: IPC crap
+		if(!isipc(src))
+			new /obj/effect/decal/remains/human(loc)
+		else
+			new /obj/effect/decal/remains/robot(loc)
 
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)

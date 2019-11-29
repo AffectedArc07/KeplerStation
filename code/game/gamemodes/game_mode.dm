@@ -24,6 +24,7 @@
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
+	var/list/protected_species = list() // KEPLER CHANGE: Species that can't be traitors
 	var/list/required_jobs = list()		// alternative required job groups eg list(list(cap=1),list(hos=1,sec=2)) translates to one captain OR one hos and two secmans
 	var/required_players = 0
 	var/maximum_players = -1 // -1 is no maximum, positive numbers limit the selection of a mode on overstaffed stations
@@ -369,6 +370,13 @@
 				if(!jobban_isbanned(player, ROLE_SYNDICATE) && !QDELETED(player) && !jobban_isbanned(player, role) && !QDELETED(player)) //Nodrak/Carn: Antag Job-bans
 					if(age_check(player.client)) //Must be older than the minimum age
 						candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
+
+	// KEPLER CHANGE
+	if(protected_species)
+		for(var/mob/dead/new_player/player in candidates)
+			if(player.client.prefs.pref_species in protected_species)
+				candidates -= player
+	// END KEPLER CHANGE
 
 	if(restricted_jobs)
 		for(var/datum/mind/player in candidates)

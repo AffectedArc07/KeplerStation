@@ -1054,7 +1054,7 @@ IPC
 /datum/emote/sound/ipc
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 	emote_type = EMOTE_AUDIBLE
-	restricted_species = list(SPECIES_ID_IPC) // For when we implement IPC
+	restricted_species = list(SPECIES_ID_IPC) // For when we implement IPC | NOWWWWWWW
 
 /datum/emote/sound/ipc/beep
 	key = "beep"
@@ -1087,7 +1087,21 @@ IPC
 	key_third_person = "chimes"
 	message = "chimes."
 	sound = 'sound/machines/chime.ogg'
-	
+
+// KEPLER CHANGE: More IPC emotes
+
+/datum/emote/sound/ipc/yes
+	key = "yes"
+	key_third_person = "blips affirmatively"
+	message = "blips affirmatively."
+	sound = 'sound/effects/mob_effects/synth_yes.ogg'
+
+/datum/emote/sound/ipc/no
+	key = "no"
+	key_third_person = "buzzes negatively"
+	message = "buzzes negatively."
+	sound = 'sound/effects/mob_effects/synth_no.ogg'
+
 /*
 	MISC
 */
