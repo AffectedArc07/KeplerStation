@@ -32,6 +32,7 @@
 	var/addiction_stage3_end = 30
 	var/addiction_stage4_end = 40
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
+	var/process_flags = ORGANIC // KEPLER CHANGE: What can process this? ORGANIC, SYNTHETIC, or ORGANIC | SYNTHETIC?. We'll assume by default that it affects organics.
 	var/self_consuming = FALSE  //I think this uhhh, makes weird stuff happen when metabolising, but... doesn't seem to do what I think, so I'm gonna leave it.
 	//Fermichem vars:
 	var/purity 				= 1 		//How pure a chemical is from 0 - 1.

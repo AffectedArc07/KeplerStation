@@ -64,6 +64,7 @@
 	color = "#8228A0"
 	toxpwr = 3
 	pH = 4
+	process_flags = ORGANIC | SYNTHETIC // KEPLER CHANGE
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent("epinephrine"))
@@ -759,6 +760,7 @@
 	metabolization_rate = 0.8 * REAGENTS_METABOLISM
 	toxpwr = 0.25
 	taste_description = "skewing"
+	process_flags = ORGANIC | SYNTHETIC // KEPLER CHANGE
 
 /datum/reagent/toxin/skewium/on_mob_life(mob/living/carbon/M)
 	/*
@@ -818,6 +820,7 @@
 	taste_description = "acid"
 	self_consuming = TRUE
 	pH = 2.75
+	process_flags = ORGANIC | SYNTHETIC // KEPLER CHANGE
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))

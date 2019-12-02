@@ -530,3 +530,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!held_item)
 		return
 	return held_item.GetID()
+
+/mob/proc/has_mouth()
+	return FALSE 

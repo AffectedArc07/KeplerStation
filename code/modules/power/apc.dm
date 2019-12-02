@@ -696,6 +696,10 @@
 			locked = FALSE
 			update_icon()
 		return
+	// KEPLER CHANGE
+	else if(istype(W, /obj/item/apc_powercord))
+		return //because we put our fancy code in the right places, and this is all in the powercord's afterattack()
+	// END KEPLER CHANGE
 	else if(panel_open && !opened && is_wire_tool(W))
 		wires.interact(user)
 	else

@@ -130,6 +130,7 @@
 	glass_name = "glass of water"
 	glass_desc = "The father of all refreshments."
 	shot_glass_icon_state = "shotglassclear"
+	process_flags = ORGANIC | SYNTHETIC // KEPLER CHANGE
 
 /*
  *	Water reaction to turf
@@ -311,6 +312,7 @@
 	id = "hell_water"
 	description = "YOUR FLESH! IT BURNS!"
 	taste_description = "burning"
+	process_flags = ORGANIC | SYNTHETIC // KEPLER CHANGE
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/M)
 	M.fire_stacks = min(5,M.fire_stacks + 3)
@@ -493,6 +495,7 @@
 	taste_description = "slime"
 	var/datum/species/race = /datum/species/human
 	var/mutationtext = "<span class='danger'>The pain subsides. You feel... human.</span>"
+	process_flags = ORGANIC | SYNTHETIC // KEPLER CHANGE
 
 /datum/reagent/mutationtoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
@@ -586,14 +589,15 @@
 	race = /datum/species/abductor
 	mutationtext = "<span class='danger'>The pain subsides. You feel... alien.</span>"
 
-/datum/reagent/mutationtoxin/android
-	name = "Android Mutation Toxin"
-	id = "androidmutationtoxin"
+// KEPLER CHANGE | This was slightly tweaked for IPCs, some is the same, some isnt
+/datum/reagent/mutationtoxin/robot 
+	name = "Robot Mutation Toxin"
+	id = "ipcmutationtoxin"
 	description = "A robotic toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/android
+	race = /datum/species/ipc
 	mutationtext = "<span class='danger'>The pain subsides. You feel... artificial.</span>"
-
+// END KEPLER CHANGE
 
 //BLACKLISTED RACES
 /datum/reagent/mutationtoxin/skeleton
@@ -863,6 +867,7 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "acid"
+	process_flags = ORGANIC | SYNTHETIC // KEPLER CHANGE
 	pH = 2
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/M)
@@ -919,6 +924,7 @@
 	reagent_state = SOLID
 	color = "#C7C7C7" // rgb: 199,199,199
 	taste_description = "the colour blue and regret"
+	process_flags = ORGANIC | SYNTHETIC // KEPLER CHANGE
 	pH = 10
 
 /datum/reagent/radium/on_mob_life(mob/living/carbon/M)
@@ -998,6 +1004,7 @@
 	reagent_state = SOLID
 	color = "#B8B8C0" // rgb: 184, 184, 192
 	taste_description = "the inside of a reactor"
+	process_flags = ORGANIC | SYNTHETIC // KEPLER CHANGE
 	pH = 4
 
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/M)
@@ -1019,6 +1026,7 @@
 	reagent_state = SOLID
 	color = "#0000CC"
 	taste_description = "fizzling blue"
+	process_flags = ORGANIC | SYNTHETIC // KEPLER CHANGE
 	pH = 12
 
 /datum/reagent/bluespace/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -1063,6 +1071,7 @@
 	glass_icon_state = "dr_gibb_glass"
 	glass_name = "glass of welder fuel"
 	glass_desc = "Unless you're an industrial tool, this is probably not safe for consumption."
+	process_flags = ORGANIC | SYNTHETIC // KEPLER CHANGE
 	pH = 4
 
 
@@ -1206,6 +1215,7 @@
 	color = "#535E66" // rgb: 83, 94, 102
 	can_synth = FALSE
 	taste_description = "sludge"
+	process_flags = ORGANIC | SYNTHETIC // KEPLER CHANGE
 
 /datum/reagent/nanomachines/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
@@ -1524,6 +1534,7 @@
 	color = "#6b008f"
 	taste_description = "bitterness"
 	taste_mult = 1.5
+	process_flags = ORGANIC | SYNTHETIC // KEPLER CHANGE
 	pH = 1.5
 
 /datum/reagent/stable_plasma/on_mob_life(mob/living/carbon/C)

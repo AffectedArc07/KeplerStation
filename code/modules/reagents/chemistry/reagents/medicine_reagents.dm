@@ -442,6 +442,7 @@
 	color = "#000000"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "ash"
+	process_flags = ORGANIC // KEPLER CHANGE
 	pH = 5
 	value = 1
 
@@ -1155,6 +1156,7 @@
 	reagent_state = SOLID
 	color = "#555555"
 	pH = 11
+	process_flags = ORGANIC | SYNTHETIC // KEPLER CHANGE
 
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-5*REM, 0) //A ton of healing - this is a 50 telecrystal investment.

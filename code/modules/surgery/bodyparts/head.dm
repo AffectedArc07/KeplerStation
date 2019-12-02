@@ -33,6 +33,7 @@
 
 	var/lip_style = null
 	var/lip_color = "white"
+	var/mouth = TRUE // KEPLER CHANGE
 
 /obj/item/bodypart/head/can_dismember(obj/item/I)
 	if(!((owner.stat == DEAD) || owner.InFullCritical()))

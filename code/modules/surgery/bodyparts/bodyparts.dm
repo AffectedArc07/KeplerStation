@@ -20,8 +20,11 @@
 	var/held_index = 0 //are we a hand? if so, which one!
 	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
 
+	// KEPLER VARS
 	var/bone_status = BONE_FLAG_NO_BONES // Is it fine, broken, splinted, or just straight up fucking gone
 	var/bone_break_threshold = 30
+	var/render_like_organic = FALSE // TRUE is for when you want a BODYPART_ROBOTIC to pretend to be a BODYPART_ORGANIC.
+	// END KEPLER VARS
 
 	var/disabled = BODYPART_NOT_DISABLED //If disabled, limb is as good as missing
 	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
@@ -211,6 +214,14 @@
 	stamina_dam = round(max(stamina_dam - stamina, 0), DAMAGE_PRECISION)
 	if(owner && updating_health)
 		owner.updatehealth()
+
+	// KEPLER CHANGE
+	if(owner.dna && owner.dna.species && (REVIVESBYHEALING in owner.dna.species.species_traits))
+		if(owner.health > 0 && !owner.hellbound)
+			owner.revive(0)
+			owner.cure_husk(0) // If it has REVIVESBYHEALING, it probably can't be cloned. No husk cure.
+	// END CHANGE
+
 	consider_processing()
 	update_disabled()
 	return update_bodypart_damage_state()
@@ -433,7 +444,7 @@
 	if((body_zone != BODY_ZONE_HEAD && body_zone != BODY_ZONE_CHEST))
 		should_draw_gender = FALSE
 
-	if(is_organic_limb())
+	if(status == BODYPART_ORGANIC || (status == BODYPART_ROBOTIC && render_like_organic == TRUE)) // KEPLER CHANGE: So IPC augments can be colorful without disrupting normal BODYPART_ROBOTIC render code.
 		if(should_draw_greyscale)
 			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 			if(should_draw_gender)
@@ -789,7 +800,8 @@
 
 /obj/item/bodypart/proc/fix_bone()
 	bone_status = BONE_FLAG_NORMAL
-	owner.update_inv_splints()
+	if(owner)
+		owner.update_inv_splints()
 
 /obj/item/bodypart/proc/on_mob_move()
 	// Dont trigger if it aint broke, or robotic, or if its splinted, or if it has no owner??
