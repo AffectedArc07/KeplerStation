@@ -3096,6 +3096,7 @@
 #include "modular_kepler\code\modules\oracle_ui\hookup_procs.dm"
 #include "modular_kepler\code\modules\oracle_ui\oracle_ui.dm"
 #include "modular_kepler\code\modules\oracle_ui\themed.dm"
+#include "modular_kepler\code\modules\unit_tests\icons.dm"
 #include "modular_kepler\code\modules\vr\vr_levels.dm"
 #include "modular_kepler\interface\skin.dmf"
 // END_INCLUDE
