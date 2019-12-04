@@ -2,6 +2,9 @@
 //Keep this sorted alphabetically
 
 #ifdef UNIT_TESTS
+// KEPLER UNIT TESTS
+#include "modular_kepler\code\modules\unit_tests\icons.dm"
+// DEFAULT TESTS
 #include "component_tests.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_recipe_collisions.dm"
