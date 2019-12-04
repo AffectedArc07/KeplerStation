@@ -2,10 +2,8 @@
 //Keep this sorted alphabetically
 
 #ifdef UNIT_TESTS
-// KEPLER UNIT TESTS
-#include "modular_kepler\code\modules\unit_tests\icons.dm"
-// DEFAULT TESTS
 #include "component_tests.dm"
+#include "icons.dm" // KEPLER CHANGE
 #include "reagent_id_typos.dm"
 #include "reagent_recipe_collisions.dm"
 #include "spawn_humans.dm"
