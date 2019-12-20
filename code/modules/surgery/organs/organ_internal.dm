@@ -25,6 +25,11 @@
 	var/now_fixed
 	var/high_threshold_cleared
 	var/low_threshold_cleared
+	// KEPLER CHANGE
+	///Was this organ implanted/inserted/etc, if true will not be removed during species change.
+	var/external = FALSE
+	//whether to call Remove() when qdeling the organ.
+	var/remove_on_qdel = TRUE
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
@@ -181,7 +186,7 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/Destroy()
-	if(owner)
+	if(owner && remove_on_qdel)
 		// The special flag is important, because otherwise mobs can die
 		// while undergoing transformation into different mobs.
 		Remove(owner, TRUE)

@@ -79,7 +79,7 @@ datum/species/ipc/on_species_loss(mob/living/carbon/C)
 /datum/action/innate/change_screen
 	name = "Change Display"
 	check_flags = AB_CHECK_CONSCIOUS
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	icon_icon = 'modular_kepler/icons/mob/actions_items.dmi'
 	button_icon_state = "ipc_screen"
 
 /datum/action/innate/change_screen/Activate()

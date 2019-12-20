@@ -121,7 +121,11 @@
 					if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
 						temp_img = icon('icons/ass/assalien.png')
 					else if(ishuman(ass)) //Suit checks are in check_ass
-						if(ass.gender == MALE)
+						// KEPLER CHANGE: IPC ASSES
+						if(isipc(ass))
+							temp_img = icon('icons/ass/assipc.png')
+						// END CHANGE
+						else if(ass.gender == MALE)
 							temp_img = icon('icons/ass/assmale.png')
 						else if(ass.gender == FEMALE)
 							temp_img = icon('icons/ass/assfemale.png')
