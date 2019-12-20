@@ -10,6 +10,10 @@
 		C = M
 		affecting = C.get_bodypart(check_zone(selected_zone))
 
+	if((affecting.status == ORGAN_ROBOTIC && !istype(I, /obj/item/screwdriver)) && (affecting.status == ORGAN_ORGANIC && !I.sharpness))
+	//if it's a robotic organ and you're not using a screwdriver OR an organic organ and you're not using something sharp.
+		return
+
 	var/datum/surgery/current_surgery
 
 	for(var/datum/surgery/S in M.surgeries)
@@ -24,7 +28,7 @@
 			if(!S.possible_locs.Find(selected_zone))
 				continue
 			if(affecting)
-				if(!S.requires_bodypart)
+				if(!(S.bodypart_types & affecting.status))
 					continue
 				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
 					continue
@@ -58,7 +62,7 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					return
-				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
+				if(!(S.bodypart_types & affecting.status))
 					return
 			else if(C && S.requires_bodypart)
 				return
