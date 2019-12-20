@@ -523,9 +523,8 @@
 	var/mob/living/carbon/viable_occupant = null
 	if(connected)
 		viable_occupant = connected.occupant
-		if(viable_occupant.has_dna() && (!(RADIMMUNE in viable_occupant.dna.species.species_traits)) && (!(NOSCAN in viable_occupant.dna.species.species_traits)) && (!(viable_occupant.disabilities & NOCLONE) || (connected.scan_level == 3))) //occupant is viable for dna modification | KEPLER CHANGED FOR IPC COMPATIBILITY
-			viable_occupant = null
-	return viable_occupant
+		if(viable_occupant.has_dna() && (!(RADIMMUNE in viable_occupant.dna.species.species_traits)) && (!(NOSCAN in viable_occupant.dna.species.species_traits)) && (!(TRAIT_NOCLONE in viable_occupant.dna.species.species_traits) || (connected.scan_level == 3))) //occupant is viable for dna modification | KEPLER CHANGED FOR IPC COMPATIBILITY			viable_occupant = null
+			return viable_occupant
 
 /obj/machinery/computer/scan_consolenew/proc/apply_buffer(action,buffer_num)
 	buffer_num = CLAMP(buffer_num, 1, NUMBER_OF_BUFFERS)

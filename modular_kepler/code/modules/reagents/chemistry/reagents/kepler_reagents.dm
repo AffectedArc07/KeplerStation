@@ -24,7 +24,7 @@
 	process_flags = SYNTHETIC
 
 /datum/reagent/medicine/liquid_solder/on_mob_life(mob/living/M)
-	M.adjustBrainLoss(-3*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
 	..()
 
 /datum/chemical_reaction/system_cleaner

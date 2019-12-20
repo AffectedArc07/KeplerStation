@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"moth_markings" = "None",
 		"ipc_screen" = "Blue",
 		"ipc_antenna" = "None",
-		"ipc_chassis" = "Morpheus Cyberkinetics(Greyscale)")
+		"ipc_chassis" = "Morpheus Cyberkinetics(Greyscale)"
 		// END KEPLER CHANGES
 		)
 

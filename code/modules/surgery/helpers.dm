@@ -28,7 +28,7 @@
 			if(!S.possible_locs.Find(selected_zone))
 				continue
 			if(affecting)
-				if(!(S.bodypart_types & affecting.status))
+				if(!(S.requires_bodypart_type & affecting.status))
 					continue
 				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
 					continue
@@ -62,7 +62,7 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					return
-				if(!(S.bodypart_types & affecting.status))
+				if(!(S.requires_bodypart_type & affecting.status))
 					return
 			else if(C && S.requires_bodypart)
 				return

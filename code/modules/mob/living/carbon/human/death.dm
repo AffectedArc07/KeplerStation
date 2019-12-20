@@ -32,7 +32,7 @@
 		else
 			// KEPLER CHANGE: IPC crap
 			if(!isipc(src))
-				new /obj/effect/gibspawner/humanbodypartless(location, src, get_static_viruses())
+				new /obj/effect/gibspawner/human/bodypartless(location, src, get_static_viruses())
 			else
 				new /obj/effect/gibspawner/robot(location, src)
 

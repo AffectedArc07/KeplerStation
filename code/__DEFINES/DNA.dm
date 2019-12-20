@@ -99,6 +99,11 @@
 #define MARKINGS		17
 #define TRANSPARENT_BODY 18
 #define NO_BONES		19
+// KEPLER TRAITS
+#define NOBREATH 100 // Do we breath
+#define RADIMMUNE 101 // Are we rad immune
+#define VIRUSIMMUNE 102 // Are we virus immune
+#define EASYDISMEMBER 103 // Do our limbs dismember easily
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"

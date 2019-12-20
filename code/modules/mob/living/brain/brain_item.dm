@@ -309,13 +309,13 @@
 	zone = "chest"
 	status = ORGAN_ROBOTIC
 	remove_on_qdel = FALSE
-	var/obj/item/device/mmi/stored_mmi
+	var/obj/item/mmi/stored_mmi
 
 /obj/item/organ/brain/mmi_holder/Destroy()
 	QDEL_NULL(stored_mmi)
 	return ..()
 
-/obj/item/organ/brain/mmi_holder/Insert(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
+/obj/item/organ/brain/mmi_holder/Insert(mob/living/carbon/C, special = 0, drop_if_replaced = TRUE, no_id_transfer = FALSE)
 	owner = C
 	C.internal_organs |= src
 	C.internal_organs_slot[slot] = src
@@ -365,13 +365,13 @@
 	icon = stored_mmi.icon
 	icon_state = stored_mmi.icon_state
 
-/obj/item/organ/brain/mmi_holder/posibrain/Initialize(var/obj/item/device/mmi/MMI)
+/obj/item/organ/brain/mmi_holder/posibrain/Initialize(var/obj/item/mmi/MMI)
 	. = ..()
 	if(MMI)
 		stored_mmi = MMI
 		MMI.forceMove(src)
 	else
-		stored_mmi = new /obj/item/device/mmi/posibrain/ipc(src)
+		stored_mmi = new /obj/item/mmi/posibrain/ipc(src)
 	spawn(5)
 		if(owner && stored_mmi)
 			stored_mmi.name = "positronic brain ([owner.real_name])"

@@ -1,12 +1,8 @@
 // SURGICAL OPERATIONS
-/datum/surgery/amputation/robotic
+/datum/surgery/amputation/mechanic
 	name = "robotic amputation"
 	steps = list(/datum/surgery_step/unscrew, /datum/surgery_step/pry_off, /datum/surgery_step/robotic_amputation)
-	bodypart_types = BODYPART_ROBOTIC
-
-
-
-
+	requires_bodypart_type = BODYPART_ROBOTIC
 
 // SURGICAL STEPS
 /datum/surgery_step/unscrew
@@ -38,11 +34,11 @@
 
 /datum/surgery_step/robotic_amputation
 	name = "disconnect limb"
-	implements = list(/obj/item/device/multitool = 100, /obj/item/wirecutters = 10)
+	implements = list(/obj/item/multitool = 100, /obj/item/wirecutters = 10)
 	time = 64
 
 /datum/surgery_step/robotic_amputation/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(!istype(tool, /obj/item/device/multitool))
+	if(!istype(tool, /obj/item/multitool))
 		user.visible_message("<span class='notice'>[user] begins to cut through the circuitry in [target]'s [parse_zone(target_zone)]!</span>", "<span class='notice'>You begin to cut through the circuitry in [target]'s [parse_zone(target_zone)]...</span>")
 	else
 		var/pro = pick("neatly", "calmly", "professionally", "carefully", "swiftly", "proficiently")

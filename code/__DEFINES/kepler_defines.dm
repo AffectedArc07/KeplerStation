@@ -29,7 +29,3 @@
 // Reagent type flags, defines the types of mobs this reagent will affect
 #define ORGANIC 1
 #define SYNTHETIC 2
-
-//Taste defines
-#define NO_TASTE_SENSITIVITY -1
-#define DEFAULT_TASTE_SENSITIVITY 15 

@@ -141,7 +141,6 @@
 /obj/item/organ/ears/robot
 	name = "auditory sensors"
 	icon_state = "robotic_ears"
-	origin_tech = "engineering=2"
 	desc = "A pair of microphones intended to be installed in an IPC head, that grant the ability to hear."
 	zone = "head"
 	slot = "ears"

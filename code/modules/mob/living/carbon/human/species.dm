@@ -106,7 +106,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/clonemod = 1	/// multiplier for clone damage
 	var/reagent_tag = PROCESS_ORGANIC //Used for metabolizing reagents. We're going to assume you're a meatbag unless you say otherwise.
 	var/allow_numbers_in_name // Can this species use numbers in its name?	
-	var/obj/item/organ/brain/mutant_brain = /obj/item/organ/brain
 
 ///////////
 // PROCS //

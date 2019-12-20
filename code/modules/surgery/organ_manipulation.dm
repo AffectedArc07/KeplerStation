@@ -61,7 +61,7 @@
 	time = 64
 	name = "manipulate organs"
 	repeatable = 1
-	implements = list(/obj/item/organ = 100, /obj/item/reagent_containers/food/snacks/organ = 0, /obj/item/organ_storage = 100, /obj/item/device/mmi = 100)
+	implements = list(/obj/item/organ = 100, /obj/item/reagent_containers/food/snacks/organ = 0, /obj/item/organ_storage = 100)
 	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55)
 	var/current_type
 	var/obj/item/organ/I = null
@@ -82,7 +82,7 @@
 			return -1
 		tool = I
 	// KEPLER CHANGE
-	if(istype(tool, /obj/item/device/mmi))//this whole thing is only used for robotic surgery in organ_mani_robotic.dm :*
+	if(istype(tool, /obj/item/mmi))//this whole thing is only used for robotic surgery in organ_mani_robotic.dm :*
 		current_type = "posibrain"
 		var/obj/item/bodypart/affected = target.get_bodypart(check_zone(target_zone))
 		if(!affected)
@@ -98,7 +98,7 @@
 		if(target.internal_organs_slot["brain"])
 			to_chat(user, "<span class='notice'>[target] already has a brain! You'd rather not find out what would happen with two in there.</span>")
 			return -1
-		var/obj/item/device/mmi/P = tool
+		var/obj/item/mmi/P = tool
 		if(!istype(P))
 			return -1
 		if(!P.brainmob || !P.brainmob.client)
