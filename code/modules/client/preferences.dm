@@ -488,34 +488,34 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
-				// KEPLER CHANGE: IPC screen selection
-				if("ipc_screen" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='14%'>"
+			// KEPLER CHANGE: IPC screen selection
+			if("ipc_screen" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='14%'>"
 
-					dat += "<h3>Screen Style</h3>"
+				dat += "<h3>Screen Style</h3>"
 
-					dat += "<a href='?_src_=prefs;preference=ipc_screen;task=input'>[features["ipc_screen"]]</a><BR>"
-					dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
-					dat += "</td>"
+				dat += "<a href='?_src_=prefs;preference=ipc_screen;task=input'>[features["ipc_screen"]]</a><BR>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
+				dat += "</td>"
 
-				if("ipc_antenna" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='14%'>"
+			if("ipc_antenna" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='14%'>"
 
-					dat += "<h3>Antenna Style</h3>"
+				dat += "<h3>Antenna Style</h3>"
 
-					dat += "<a href='?_src_=prefs;preference=ipc_antenna;task=input'>[features["ipc_antenna"]]</a><BR>"
-					dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
-					dat += "</td>"
+				dat += "<a href='?_src_=prefs;preference=ipc_antenna;task=input'>[features["ipc_antenna"]]</a><BR>"
+				dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
+				dat += "</td>"
 
-				if("ipc_chassis" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='14%'>"
+			if("ipc_chassis" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='14%'>"
 
-					dat += "<h3>Chassis Style</h3>"
+				dat += "<h3>Chassis Style</h3>"
 
-					dat += "<a href='?_src_=prefs;preference=ipc_chassis;task=input'>[features["ipc_chassis"]]</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=ipc_chassis;task=input'>[features["ipc_chassis"]]</a><BR>"
 
-					dat += "</td>"
-				// END KEPLER CHANGE
+				dat += "</td>"
+			// END KEPLER CHANGE
 				
 			if(CONFIG_GET(flag/join_with_mutant_humans))
 
